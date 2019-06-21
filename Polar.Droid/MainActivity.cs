@@ -25,11 +25,11 @@ namespace Polar.Droid
 
             ImageView polar = FindViewById<ImageView>(Resource.Id.polar_id);
             Button button = FindViewById<Button>(Resource.Id.button_id);
-
+            TextView newsText = FindViewById<TextView>(Resource.Id.news_text);
 
             Spinner spinner = (Spinner)FindViewById(Resource.Id.spinner1);
             // Create an ArrayAdapter using the string array and a default spinner layout
-            ArrayAdapter<string> adapter = (ArrayAdapter<string>)ArrayAdapter.CreateFromResource(this,
+            var adapter = ArrayAdapter.CreateFromResource(this,
                     Resource.Array.news_array, Android.Resource.Layout.SimpleSpinnerItem);
             adapter.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
             spinner.Adapter = adapter;
@@ -40,9 +40,11 @@ namespace Polar.Droid
                 bundle.PutString("newsSource", newsSource);
                 HomeFragment fragment = new HomeFragment();
                 fragment.Arguments = bundle;
-
+                newsText.Visibility = ViewStates.Invisible;
                 button.Visibility = ViewStates.Invisible;
                 polar.Visibility = ViewStates.Invisible;
+                spinner.Visibility = ViewStates.Invisible;
+
                 var transaction = this.SupportFragmentManager.BeginTransaction();
                 transaction.Replace(Resource.Id.fragment_container, fragment);
         

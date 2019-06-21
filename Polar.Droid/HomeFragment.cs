@@ -36,6 +36,9 @@ namespace Polar.Droid
             this.mNewsItems = new List<NewsItem>();
             this.newsInterface = new NewsImplementation();
 
+            this.mNewsItems.Add(new NewsItem("Test", "test", Resource.Drawable.placeholder));
+
+
             try
             {
                 if (!newsSource.Equals(null) || !newsSource.Equals(""))
@@ -53,6 +56,12 @@ namespace Polar.Droid
             {
                 Console.WriteLine(e);
             }
+            mAdapter = new NewsAdapter(mNewsItems);
+            mRecyclerView.SetAdapter(mAdapter);
+            mRecyclerView.ScrollToPosition(0);
+            mLayoutManager = new LinearLayoutManager(this.Activity);
+            mRecyclerView.SetLayoutManager(mLayoutManager);
+
         }
 
 
@@ -65,12 +74,11 @@ namespace Polar.Droid
 
             View view = inflater.Inflate(Resource.Layout.home_layout, null);
 
-            mAdapter = new NewsAdapter(mNewsItems);
+            TextView source = (TextView) view.FindViewById(Resource.Id.nav_label);
+            source.SetText("Source: "+ newsSource, TextView.BufferType.Normal);
             mRecyclerView = (RecyclerView)view.FindViewById(Resource.Id.recyclerView);
-            mRecyclerView.SetAdapter(mAdapter);
-            mRecyclerView.ScrollToPosition(0);
-            mLayoutManager = new LinearLayoutManager(this.Activity);
-            mRecyclerView.SetLayoutManager(mLayoutManager);
+
+
 
             return view;
 
