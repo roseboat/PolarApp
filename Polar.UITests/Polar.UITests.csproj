@@ -28,16 +28,8 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="NUnit" Version="2.6.4" />
-    <PackageReference Include="Xamarin.UITest" Version="2.2.7" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Polar\Polar.csproj">
-      <Project>{88C65B18-D5FD-4F1C-97B2-D650AFBF592D}</Project>
-      <Name>Polar</Name>
-      <ReferenceOutputAssembly>False</ReferenceOutputAssembly>
-      <Private>False</Private>
-    </ProjectReference>
+    <PackageReference Include="NUnit" Version="3.12.0" />
+    <PackageReference Include="Xamarin.UITest" Version="3.0.0" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Tests.cs" />

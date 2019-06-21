@@ -8,12 +8,12 @@ using Android.Support.V7.App;
 using Android.Views;
 using Android.Widget;
 
-namespace Polar
+namespace Polar.Droid
 {
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true)]
     public class MainActivity : AppCompatActivity
     {
-
+        public string newsSource = "BBC";
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -27,29 +27,35 @@ namespace Polar
             Button button = FindViewById<Button>(Resource.Id.button_id);
 
 
-            polar.Click += delegate
-            {
-                button.Visibility = ViewStates.Invisible;
-                polar.Visibility = ViewStates.Invisible;
-                var transaction = this.SupportFragmentManager.BeginTransaction();
-                transaction.Replace(Resource.Id.fragment_container, new HomeFragment());
-                transaction.AddToBackStack(null);
-                transaction.Commit();
-            };
+            Spinner spinner = (Spinner)FindViewById(Resource.Id.spinner1);
+            // Create an ArrayAdapter using the string array and a default spinner layout
+            ArrayAdapter<string> adapter = (ArrayAdapter<string>)ArrayAdapter.CreateFromResource(this,
+                    Resource.Array.news_array, Android.Resource.Layout.SimpleSpinnerItem);
+            adapter.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
+            spinner.Adapter = adapter;
 
             button.Click += delegate
             {
+                Bundle bundle = new Bundle();
+                bundle.PutString("newsSource", newsSource);
+                HomeFragment fragment = new HomeFragment();
+                fragment.Arguments = bundle;
+
                 button.Visibility = ViewStates.Invisible;
                 polar.Visibility = ViewStates.Invisible;
                 var transaction = this.SupportFragmentManager.BeginTransaction();
-                transaction.Replace(Resource.Id.fragment_container, new HomeFragment());
+                transaction.Replace(Resource.Id.fragment_container, fragment);
+        
                 transaction.AddToBackStack(null);
                 transaction.Commit();
             };
         }
 
-
-
+        private void spinner_ItemSelected(object sender, AdapterView.ItemSelectedEventArgs e)
+        {
+            Spinner spinner = (Spinner)sender;
+            this.newsSource = spinner.GetItemAtPosition(e.Position).ToString();
+        }
 
 
         public override bool OnCreateOptionsMenu(IMenu menu)

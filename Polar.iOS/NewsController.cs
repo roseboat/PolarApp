@@ -1,54 +1,62 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Polar.iOS.Models;
 using UIKit;
+using SuperNewsService.NewsFacade.Contracts;
+using SuperNewsService.NewsFacade.Implementation;
+using SuperNewsService.NewsFacade.Contracts.Models;
 
 namespace Polar.iOS
 {
     public partial class NewsController : UICollectionViewController
     {
-       public string normalNewsSource;
+        public string normalNewsSource;
+        public string queryTopic;
+        public INewsInterface newsInterface;
 
 
         public NewsController(IntPtr handle) : base(handle)
         {
-            Console.WriteLine("Normal news source:"+normalNewsSource);
         }
 
-
-        public override void ViewDidLoad()
+  
+        public override async void ViewDidLoad()
         {
             base.ViewDidLoad();
 
-
-
-            var data = new List<NewsItemModel>
+            this.newsInterface = new NewsImplementation();
+            try
             {
-                new NewsItemModel
+
+                if (!normalNewsSource.Equals(null) || !normalNewsSource.Equals(""))
                 {
-                    PhotoID= "placeholder.jpg", Headline = this.normalNewsSource, ArticleDate = DateTime.Now, Preamble = "1 This is a preamble which will contain the first sentence of the news story."
-                },
-                new NewsItemModel
-                {
-                    PhotoID= "placeholder.jpg", Headline ="This is a headline 2", ArticleDate = DateTime.Now, Preamble = "2 This is a preamble which will contain the first sentence of the news story."
-                },
-                new NewsItemModel
-                {
-                    PhotoID= "placeholder.jpg", Headline ="This is a headline 3", ArticleDate = DateTime.Now,  Preamble = "3 This is a preamble which will contain the first sentence of the news story."
-                },
-                new NewsItemModel
-                {
-                    PhotoID= "placeholder.jpg", Headline ="This is a headline 4 ", ArticleDate = DateTime.Now,  Preamble = "4 This is a preamble which will contain the first sentence of the news story."
-                }, new NewsItemModel
-                {
-                    PhotoID= "placeholder.jpg", Headline ="This is a headline 5",ArticleDate = DateTime.Now,  Preamble = "5 This is a preamble which will contain the first sentence of the news story."
+                    List<Newsitem> newsItems = await newsInterface.GetPolarNews(queryTopic, normalNewsSource);
+
+                    var data = new List<NewsItemModel>();
+
+                    foreach (Newsitem item in newsItems)
+                    {
+                        data.Add(new NewsItemModel() { Headline = item.Title, ArticleDate = item.PublishedDate, Preamble = item.Description, PhotoID= "placeholder.jpg", SourceName = "Source: "+ item.SourceName });
+                    }
+
+
+                    data.Add(new NewsItemModel() { Headline = "test", ArticleDate = DateTime.Now, Preamble = "test test test test test test test test test test test test test test test test test test test test test test test test test test test test ", PhotoID = "placeholder.jpg", SourceName = "Source: " + "FakeNews" });
+                    data.Add(new NewsItemModel() { Headline = "test", ArticleDate = DateTime.Now, Preamble = "test test test test test test test test test test test test test test test test test test test test test test test test test test test test ", PhotoID = "placeholder.jpg", SourceName = "Source: " + "FakeNews" });
+                    data.Add(new NewsItemModel() { Headline = "test", ArticleDate = DateTime.Now, Preamble = "test test test test test test test test test test test test test test test test test test test test test test test test test test test test ", PhotoID = "placeholder.jpg", SourceName = "Source: " + "FakeNews" });
+                    data.Add(new NewsItemModel() { Headline = "test", ArticleDate = DateTime.Now, Preamble = "test test test test test test test test test test test test test test test test test test test test test test test test test test test test ", PhotoID = "placeholder.jpg", SourceName = "Source: " + "FakeNews" });
+                    data.Add(new NewsItemModel() { Headline = "test", ArticleDate = DateTime.Now, Preamble = "test test test test test test test test test test test test test test test test test test test test test test test test test test test test ", PhotoID = "placeholder.jpg", SourceName = "Source: " + "FakeNews" });
+                    data.Add(new NewsItemModel() { Headline = "test", ArticleDate = DateTime.Now, Preamble = "test test test test test test test test test test test test test test test test test test test test test test test test test test test test ", PhotoID = "placeholder.jpg", SourceName = "Source: " + "FakeNews" });
+
+                    this.NewsControllerView.Source = new NewsCollectionViewSource(this, data);
 
                 }
-                };
+            }
+            catch (Exception e)
+            {
+                Console.Write(e);
+            }
 
-
-            this.NewsControllerView.Source = new NewsCollectionViewSource(this, data);
-   
         }
 
         public override void DidReceiveMemoryWarning()

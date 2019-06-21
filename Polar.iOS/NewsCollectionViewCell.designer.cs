@@ -1,4 +1,4 @@
-﻿// WARNING
+// WARNING
 //
 // This file has been generated automatically by Visual Studio to store outlets and
 // actions made in the UI designer. If it is removed, they will be lost.
@@ -23,14 +23,12 @@ namespace Polar.iOS
 
 		[Outlet]
 		UIKit.UILabel PreambleText { get; set; }
+
+		[Outlet]
+		UIKit.UILabel SourceLable { get; set; }
 		
 		void ReleaseDesignerOutlets ()
 		{
-			if (NewsImage != null) {
-				NewsImage.Dispose ();
-				NewsImage = null;
-			}
-
 			if (DateText != null) {
 				DateText.Dispose ();
 				DateText = null;
@@ -41,9 +39,19 @@ namespace Polar.iOS
 				HeadlineText = null;
 			}
 
+			if (NewsImage != null) {
+				NewsImage.Dispose ();
+				NewsImage = null;
+			}
+
 			if (PreambleText != null) {
 				PreambleText.Dispose ();
 				PreambleText = null;
+			}
+
+			if (SourceLable != null) {
+				SourceLable.Dispose ();
+				SourceLable = null;
 			}
 		}
 	}

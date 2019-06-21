@@ -73,7 +73,7 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
-      <PackageReference Include="Xamarin.Essentials" Version="1.0.1" />
+      <PackageReference Include="Xamarin.Essentials" Version="1.1.0" />
     </ItemGroup>
     <ItemGroup>
         <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json">
@@ -154,6 +154,16 @@
     <ItemGroup>
       <BundleResource Include="Resources\polar.png" />
       <BundleResource Include="Resources\placeholder.jpg" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Downloads\PolarNewsApi-master\SuperNewsService.NewsFacade.Contracts\SuperNewsService.NewsFacade.Contracts.csproj">
+        <Project>{2AC97ED0-B685-4496-85FD-426868DF7CAB}</Project>
+        <Name>SuperNewsService.NewsFacade.Contracts</Name>
+      </ProjectReference>
+      <ProjectReference Include="..\..\..\Downloads\PolarNewsApi-master\SuperNewsService.NewsFacade.Implementation\SuperNewsService.NewsFacade.Implementation.csproj">
+        <Project>{31F4EA72-225C-49A9-A598-44F0BC9E9EA6}</Project>
+        <Name>SuperNewsService.NewsFacade.Implementation</Name>
+      </ProjectReference>
     </ItemGroup>
     <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>

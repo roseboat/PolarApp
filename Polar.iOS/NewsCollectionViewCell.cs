@@ -28,6 +28,7 @@ namespace Polar.iOS
             HeadlineText.Text = items[indexPath.Row].Headline;
             PreambleText.Text = items[indexPath.Row].Preamble;
             DateText.Text = (items[indexPath.Row].ArticleDate).ToString();
+            SourceLable.Text = items[indexPath.Row].SourceName;
         }
     }
 }

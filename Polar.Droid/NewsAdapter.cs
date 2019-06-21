@@ -5,7 +5,7 @@ using Android.Widget;
 using System;
 using System.Collections.Generic;
 
-namespace Polar
+namespace Polar.Droid
 {
     public class NewsAdapter:RecyclerView.Adapter
     {

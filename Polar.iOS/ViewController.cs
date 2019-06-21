@@ -9,8 +9,9 @@ namespace Polar.iOS
     public partial class ViewController : UIViewController
     {
 
-        public string normalNewsSource;
-        public string[] newsSources = new string[] { "BBC", "CNN", "MSNBC", "The Sun", "Fox News" };
+        public string normalNewsSource = "BBC";
+        public string queryTopic;
+        public string[] newsSources = new string[] { "BBC", "The Sun", "Fox News", "The New York Times", "The Independent", "Houston Chronicle"};
 
         public ViewController(IntPtr handle) : base(handle)
         {
@@ -21,21 +22,16 @@ namespace Polar.iOS
             base.ViewDidLoad();
             NewsPicker.DataSource = new NewsPickerDataSource(newsSources);
             NewsPicker.Delegate = new NewsPickerDelegate(newsSources);
+            NewsPicker.Model = new MyNewsPicker(this);
 
-
-
-            // Perform any additional setup after loading the view, typically from a nib.
         }
 
         partial void GetNewsButton_TouchUpInside(UIButton sender)
         {
-            this.normalNewsSource = NewsSourceTextInput.Text;
 
+            this.queryTopic = TopicText.Text;
             if (!normalNewsSource.Equals(null) || !normalNewsSource.Equals(""))
             {
-
-                NewsSourceLabel.Text = "Selected: " + normalNewsSource;
-
                 this.PerformSegue("NewsViewSegue", sender: Self);
             }
         }
@@ -44,6 +40,7 @@ namespace Polar.iOS
         {
             var vc = segue.DestinationViewController as NewsController;
             vc.normalNewsSource = this.normalNewsSource;
+            vc.queryTopic = this.queryTopic;
         }
 
         public override void DidReceiveMemoryWarning()
@@ -88,10 +85,10 @@ public class NewsPickerDelegate: UIPickerViewDelegate
     {
         return data[(int)row];
     }
-    public override void Selected(UIPickerView pickerView, nint row, nint component)
-    {
-
-    }
+    //public override void Selected(UIPickerView pickerView, nint row, nint component)
+    //{
+      
+    //}
 
 }
 public class MyNewsPicker : UIPickerViewModel
@@ -118,6 +115,7 @@ public class MyNewsPicker : UIPickerViewModel
     {
         string s = viewController.newsSources[(int)pickerView.SelectedRowInComponent(0)];
         viewController.normalNewsSource = s;
+
     }
 
 }
